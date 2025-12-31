@@ -1,0 +1,5 @@
+{
+  "name": "家訪照片排版助手 v1.1",
+  "description": "少年調查保護官專用工具：上傳家訪照片、標記空間類別，並自動排版生成A4 PDF報告。",
+  "requestFramePermissions": []
+}
