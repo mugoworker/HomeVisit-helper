@@ -14,7 +14,8 @@
     "lucide-react": "^0.562.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.4",
-    "heic2any": "^0.0.4"
+    "heic2any": "^0.0.4",
+    "@google/generative-ai": "^0.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

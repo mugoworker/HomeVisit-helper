@@ -7,6 +7,7 @@ import { PdfPreview } from './components/PdfPreview';
 import { PreviewModal } from './components/PreviewModal';
 import { generatePdfFromHtml } from './services/pdfGenerator';
 import { processImageFile } from './services/imageUtils';
+// imageUtils import kept
 
 const PREVIEW_CONTAINER_ID = 'pdf-preview-container';
 
@@ -18,7 +19,7 @@ const App: React.FC = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [uploaderKey, setUploaderKey] = useState(0); // To force reset uploader
-  
+
   // Drag and drop state
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
@@ -36,7 +37,7 @@ const App: React.FC = () => {
 
     const newFiles = Array.from(fileList);
     const availableSlots = MAX_PHOTOS - photos.length;
-    
+
     if (newFiles.length > availableSlots) {
       setError(`超過上限，僅處理前 ${availableSlots} 張照片。`);
     }
@@ -49,12 +50,13 @@ const App: React.FC = () => {
       const processedFiles = await Promise.all(
         filesToProcess.map(async (file) => await processImageFile(file))
       );
-      
+
       const newPhotos: PhotoData[] = processedFiles.map((file) => ({
         id: Math.random().toString(36).substr(2, 9),
         file,
         previewUrl: URL.createObjectURL(file),
         category: DEFAULT_CATEGORIES[0], // Default to first category
+        isCustomCategory: false,
         isCustomCategory: false
       }));
 
@@ -68,10 +70,14 @@ const App: React.FC = () => {
   };
 
   const updateCategory = (id: string, category: string, isCustom: boolean) => {
-    setPhotos(prev => prev.map(p => 
+    setPhotos(prev => prev.map(p =>
       p.id === id ? { ...p, category, isCustomCategory: isCustom } : p
     ));
   };
+
+  // Functions removed
+
+  // Functions removed
 
   const removePhoto = (id: string) => {
     setPhotos(prev => {
@@ -88,7 +94,7 @@ const App: React.FC = () => {
     setPhotos([]);
     setError(null);
     setLayoutMode(null); // Reset layout mode to go back to selection screen
-    setUploaderKey(prev => prev + 1); 
+    setUploaderKey(prev => prev + 1);
   };
 
   // Drag and Drop Handlers
@@ -116,7 +122,7 @@ const App: React.FC = () => {
 
   const handleDownloadPdf = async (customFilename: string) => {
     if (photos.length === 0 || !layoutMode) return;
-    
+
     // Determine filename
     let filename = customFilename.trim() || "家訪照片紀錄";
     if (!filename.toLowerCase().endsWith('.pdf')) filename += '.pdf';
@@ -153,19 +159,19 @@ const App: React.FC = () => {
             className="group bg-white p-10 rounded-2xl shadow-sm border-2 border-slate-200 hover:border-[#A9B7AA] hover:shadow-xl transition-all flex flex-col items-center text-center gap-6"
           >
             <div className="w-32 h-44 border-4 border-slate-300 rounded-lg bg-slate-100 group-hover:bg-[#A9B7AA]/10 group-hover:border-[#A9B7AA] transition-colors relative flex flex-col p-2">
-               <div className="w-full h-4 border-b-2 border-slate-300 mb-2"></div>
-               <div className="flex-1 grid grid-cols-2 gap-1">
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-               </div>
+              <div className="w-full h-4 border-b-2 border-slate-300 mb-2"></div>
+              <div className="flex-1 grid grid-cols-2 gap-1">
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+              </div>
             </div>
             <div>
               <h2 className="text-3xl font-bold text-slate-800 mb-2 group-hover:text-[#A9B7AA]">直式版型</h2>
               <p className="text-slate-500 text-lg">
-                標準 A4 直向<br/>
-                照片比例 3:4<br/>
+                標準 A4 直向<br />
+                照片比例 3:4<br />
                 頁眉位於上方
               </p>
             </div>
@@ -176,19 +182,19 @@ const App: React.FC = () => {
             className="group bg-white p-10 rounded-2xl shadow-sm border-2 border-slate-200 hover:border-[#A9B7AA] hover:shadow-xl transition-all flex flex-col items-center text-center gap-6"
           >
             <div className="w-44 h-32 border-4 border-slate-300 rounded-lg bg-slate-100 group-hover:bg-[#A9B7AA]/10 group-hover:border-[#A9B7AA] transition-colors relative flex p-2 gap-2">
-               <div className="h-full w-4 border-r-2 border-slate-300"></div>
-               <div className="flex-1 grid grid-cols-2 gap-1">
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-                 <div className="bg-slate-300/50 rounded-sm"></div>
-               </div>
+              <div className="h-full w-4 border-r-2 border-slate-300"></div>
+              <div className="flex-1 grid grid-cols-2 gap-1">
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+                <div className="bg-slate-300/50 rounded-sm"></div>
+              </div>
             </div>
             <div>
               <h2 className="text-3xl font-bold text-slate-800 mb-2 group-hover:text-[#A9B7AA]">橫式版型</h2>
               <p className="text-slate-500 text-lg">
-                A4 橫向<br/>
-                照片比例 4:3<br/>
+                A4 橫向<br />
+                照片比例 4:3<br />
                 頁眉位於左方 (直書)
               </p>
             </div>
@@ -203,9 +209,9 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col pb-32 font-[LXGW WenKai TC]">
       {/* Hidden Preview Container for actual PDF Generation */}
       <PdfPreview photos={photos} containerId={PREVIEW_CONTAINER_ID} layoutMode={layoutMode} />
-      
+
       {/* Visual Preview Modal */}
-      <PreviewModal 
+      <PreviewModal
         isOpen={showPreviewModal}
         onClose={() => setShowPreviewModal(false)}
         onConfirm={handleDownloadPdf}
@@ -228,24 +234,24 @@ const App: React.FC = () => {
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3">
-             <button 
-                type="button"
-                onClick={resetAll}
-                className="p-3 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2"
-                title="重選版型/清空"
-              >
-                <RefreshCw size={24} />
-                <span className="hidden sm:inline font-medium text-lg">重選版型</span>
-              </button>
+            <button
+              type="button"
+              onClick={resetAll}
+              className="p-3 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2"
+              title="重選版型/清空"
+            >
+              <RefreshCw size={24} />
+              <span className="hidden sm:inline font-medium text-lg">重選版型</span>
+            </button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-10 w-full">
-        
+
         {/* Instructions */}
         {photos.length === 0 && (
           <div className="mb-10 bg-[#A9B7AA]/10 border border-[#A9B7AA]/30 rounded-xl p-6 flex items-start gap-4 text-[#526053]">
@@ -264,10 +270,10 @@ const App: React.FC = () => {
 
         {/* Uploader */}
         <div className="mb-10">
-          <PhotoUploader 
+          <PhotoUploader
             key={uploaderKey}
-            currentCount={photos.length} 
-            onUpload={handleUpload} 
+            currentCount={photos.length}
+            onUpload={handleUpload}
             isLoading={isProcessing}
           />
           {error && (
@@ -308,7 +314,7 @@ const App: React.FC = () => {
           <div className="text-xl font-medium text-slate-600">
             已選擇 <span className="text-[#A9B7AA] font-bold text-2xl">{photos.length}</span> / {MAX_PHOTOS} 張
           </div>
-          
+
           <button
             onClick={() => setShowPreviewModal(true)}
             disabled={photos.length === 0 || isProcessing || isGenerating}

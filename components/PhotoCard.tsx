@@ -13,10 +13,10 @@ interface PhotoCardProps {
   layoutMode: LayoutMode;
 }
 
-export const PhotoCard: React.FC<PhotoCardProps> = ({ 
-  photo, 
-  index, 
-  onUpdateCategory, 
+export const PhotoCard: React.FC<PhotoCardProps> = ({
+  photo,
+  index,
+  onUpdateCategory,
   onRemove,
   onDragStart,
   onDragEnter,
@@ -27,7 +27,7 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
   const aspectRatioClass = layoutMode === 'portrait' ? 'aspect-[3/4]' : 'aspect-[4/3]';
 
   return (
-    <div 
+    <div
       className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden group hover:shadow-md transition-shadow cursor-move"
       draggable
       onDragStart={(e) => onDragStart(e, index)}
@@ -42,10 +42,10 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
           alt={`Photo ${index + 1}`}
           className="w-full h-full object-fill"
         />
-        
+
         {/* Drag Handle Indicator */}
         <div className="absolute top-3 left-3 p-2 bg-black/30 text-white rounded-md backdrop-blur-sm pointer-events-none z-10">
-           <GripHorizontal size={24} />
+          <GripHorizontal size={24} />
         </div>
 
         {/* Index Badge (Right side now to avoid overlap with Grip) */}
@@ -82,7 +82,6 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
               onChange={(e) => onUpdateCategory(photo.id, e.target.value, true)}
               placeholder="輸入空間名稱"
               className="flex-1 px-4 py-3 text-lg border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A9B7AA] focus:border-transparent bg-white"
-              autoFocus
             />
             <button
               onClick={() => onUpdateCategory(photo.id, DEFAULT_CATEGORIES[0], false)}
