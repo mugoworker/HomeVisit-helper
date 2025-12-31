@@ -25,6 +25,7 @@ npm install
 yarn install
 ```
 
+
 ### 開發模式 (Development)
 
 啟動本地開發伺服器：
@@ -40,6 +41,7 @@ npm run dev
 ```bash
 npm run build
 ```
+
 
 打包後的檔案位於 `dist` 資料夾。
 
